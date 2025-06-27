@@ -1,5 +1,10 @@
 import UIKit
 
+//test of calling a function before it's declared
+print(hasFiveDigitNumber("test 72636 jjjjfjdjsaf"))
+//works for functions
+
+
 var greeting = "Hello, playground"
 print(greeting)
 
@@ -42,13 +47,27 @@ print("Contains \"12345\" : " + String(stringToParse.contains("12345")))
 print( alternateString)
 print("Contains \"12345\" : " + String(alternateString.contains("12345")))
 
+//regex block, getting harder
+
 import Foundation
 func hasFiveDigitNumber(_ stringToCheck: String) -> Bool{
+    //b is a divider, like a <div>. d{} is how many decimal places
+    var results = false
     let fiveDigitNumber = #"\b\d{5}\b"#
     if let regex = try? NSRegularExpression(pattern: fiveDigitNumber){
+        //sets the range between the start and the end of the string
+        let range = NSRange(stringToCheck.startIndex..<stringToCheck.endIndex, in: stringToCheck)
+        let matches = regex.matches(in: stringToCheck, range: range)
         
+        for match in matches {
+            if let swiftRange = Range(match.range, in: stringToCheck){
+                print("Match: \(stringToCheck[swiftRange])")
+                results = true
+            }
+        }
     }
-    return false
+    return results
 }
 
 
+print(hasFiveDigitNumber(stringToParse))
